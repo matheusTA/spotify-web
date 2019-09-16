@@ -11,6 +11,7 @@ import PauseIcon from '../../assets/images/pause.svg';
 import ForwardIcon from '../../assets/images/forward.svg';
 import RepeatIcon from '../../assets/images/repeat.svg';
 
+console.tron.log('teste');
 const Player = () => (
   <Container>
     <MusicCurrent>
