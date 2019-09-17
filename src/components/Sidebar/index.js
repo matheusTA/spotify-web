@@ -9,19 +9,21 @@ import addPlaylist from '../../assets/images/add_playlist.svg';
 
 class Sidebar extends Component {
   componentDidMount() {
-    this.props.getPlaylistsRequest();
+    const { getPlaylistsRequest } = this.props;
+    getPlaylistsRequest();
   }
 
   render() {
+    const { playlists } = this.props;
     return (
       <Container>
         <div>
           <Nav bold>
             <li>
-              <a href="/">Navegar</a>
+              <Link to="/">Navegar</Link>
             </li>
             <li>
-              <a href="/">Radio</a>
+              <Link to="/">Radio</Link>
             </li>
           </Nav>
 
@@ -30,31 +32,31 @@ class Sidebar extends Component {
               <span>Sua biblioteca</span>
             </li>
             <li>
-              <a href="/">Seu Daily Mix</a>
+              <Link to="/">Seu Daily Mix</Link>
             </li>
             <li>
-              <a href="/">Tocadas recentemente</a>
+              <Link to="/">Tocadas recentemente</Link>
             </li>
             <li>
-              <a href="/">Músicas</a>
+              <Link to="/">Músicas</Link>
             </li>
             <li>
-              <a href="/">Álbums</a>
+              <Link to="/">Álbums</Link>
             </li>
             <li>
-              <a href="/">Artistas</a>
+              <Link to="/">Artistas</Link>
             </li>
             <li>
-              <a href="/">Estações</a>
+              <Link to="/">Estações</Link>
             </li>
             <li>
-              <a href="/">Arquivos locais</a>
+              <Link to="/">Arquivos locais</Link>
             </li>
             <li>
-              <a href="/">Vídeos</a>
+              <Link to="/">Vídeos</Link>
             </li>
             <li>
-              <a href="/">Podcasts</a>
+              <Link to="/">Podcasts</Link>
             </li>
           </Nav>
 
@@ -62,7 +64,7 @@ class Sidebar extends Component {
             <li>
               <span>Playlists</span>
             </li>
-            {this.props.playlists.data.map((playlist) => (
+            {playlists.data.map((playlist) => (
               <li key={playlist.id}>
                 <Link to={`playlists/${playlist.id}`}>{playlist.title}</Link>
               </li>
