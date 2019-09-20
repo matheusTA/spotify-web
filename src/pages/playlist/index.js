@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as PlaylistDetailsActions } from '../../store/ducks/playlistDetails';
+import { Creators as PlayerActions } from '../../store/ducks/player';
 import { Container, Header, SongList } from './styles';
 import ClockIcon from '../../assets/images/clock.svg';
 import PlusIcon from '../../assets/images/plus.svg';
@@ -28,7 +29,7 @@ class Playlist extends Component {
   }
 
   renderDetails = () => {
-    const { playlistDetails } = this.props;
+    const { playlistDetails, loadSong } = this.props;
 
     return (
       <Container>
@@ -56,7 +57,7 @@ class Playlist extends Component {
         <SongList cellPadding={0} cellSpacing={0}>
           <thead>
             <tr>
-              <th />
+              <th> </th>
               <th>Título</th>
               <th>Artista</th>
               <th>Album</th>
@@ -70,7 +71,7 @@ class Playlist extends Component {
                 <td colSpan={5}>Nenhuma música cadastrada</td>
               </tr>
             ) : (playlistDetails.data.songs.map((song) => (
-              <tr key={song.id}>
+              <tr key={song.id} onDoubleClick={() => loadSong(song)}>
                 <td><img src={PlusIcon} alt="Adicionar" /></td>
                 <td>{song.title}</td>
                 <td>{song.author}</td>
@@ -118,12 +119,14 @@ Playlist.propTypes = {
       })),
     }),
   }).isRequired,
+  loadSong: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   playlistDetails: state.playlistDetails,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(PlaylistDetailsActions, dispatch);
+// eslint-disable-next-line max-len
+const mapDispatchToProps = (dispatch) => bindActionCreators({ ...PlaylistDetailsActions, ...PlayerActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
