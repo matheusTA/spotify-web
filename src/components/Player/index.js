@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/jsx-indent-props */
 import React from 'react';
 import Slider from 'rc-slider';
 import PropTypes from 'prop-types';
@@ -16,81 +18,114 @@ import PauseIcon from '../../assets/images/pause.svg';
 import ForwardIcon from '../../assets/images/forward.svg';
 import RepeatIcon from '../../assets/images/repeat.svg';
 
-const Player = ({ player, play, pause }) => (
-  <Container>
-    {!!player.currentSong && (
-      <Sound url={player.currentSong.file} playStatus={player.status} />
-    )}
+const Player = ({
+  player,
+  play,
+  pause,
+  next,
+  prev,
+}) => (
 
-    <MusicCurrent>
-      {!!player.currentSong && (
-        <>
-          <img
-            src={player.currentSong.thumbnail}
-            alt={player.currentSong.title}
+    <Container>
+      {!!player.currentSong
+        && (
+          <Sound
+            url={player.currentSong.file}
+            playStatus={player.status}
+            onFinishedPlaying={next}
           />
-          <div>
-            <span>{player.currentSong.title}</span>
-            <small>{player.currentSong.author}</small>
-          </div>
-        </>
-      )}
-    </MusicCurrent>
+        )}
 
-    <MusicPlayer>
-      <Controls>
-        <button type="button">
-          <img src={ShuffleIcon} alt="Shuffle" />
-        </button>
+      <MusicCurrent>
+        {!!player.currentSong && (
+          <>
+            <img
+              src={player.currentSong.thumbnail}
+              alt={player.currentSong.title}
+            />
+            <div>
+              <span>{player.currentSong.title}</span>
+              <small>{player.currentSong.author}</small>
+            </div>
+          </>
+        )}
+      </MusicCurrent>
 
-        <button type="button">
-          <img src={BackwardIcon} alt="Backward" />
-        </button>
+      <MusicPlayer>
+        <Controls>
+          <button type="button">
+            <img
+              src={ShuffleIcon}
+              alt="Shuffle"
+            />
+          </button>
 
-        {!!player.currentSong && player.status === Sound.status.PLAYING
-          ? (
-            <button type="button" onClick={pause}>
-              <img src={PauseIcon} alt="pause" />
-            </button>
-          )
-          : (
-            <button type="button" onClick={play}>
-              <img src={PlayIcon} alt="Play" />
-            </button>
-          )}
+          <button type="button" onClick={prev}>
+            <img
+              src={BackwardIcon}
+              alt="Backward"
+            />
+          </button>
 
-        <button type="button">
-          <img src={ForwardIcon} alt="Forward" />
-        </button>
+          {!!player.currentSong && player.status === Sound.status.PLAYING
+            ? (
+              <button type="button" onClick={pause}>
+                <img
+                  src={PauseIcon}
+                  alt="pause"
+                />
+              </button>
+            )
+            : (
+              <button type="button" onClick={play}>
+                <img
+                  src={PlayIcon}
+                  alt="Play"
+                />
+              </button>
+            )}
 
-        <button type="button">
-          <img src={RepeatIcon} alt="Repeat" />
-        </button>
-      </Controls>
+          <button type="button" onClick={next}>
+            <img
+              src={ForwardIcon}
+              alt="Forward"
+            />
+          </button>
 
-      <Time>
-        <span>1:39</span>
-        <ProgressSlider>
-          <Slider
-            railStyle={{ background: '#404040', borderRadius: '10' }}
-            trackStyle={{ background: '#1ED760' }}
-            handleStyle={{ border: 0 }}
-          />
-        </ProgressSlider>
-        <span>3:50</span>
-      </Time>
-    </MusicPlayer>
+          <button type="button">
+            <img
+              src={RepeatIcon}
+              alt="Repeat"
+            />
+          </button>
+        </Controls>
 
-    <Volume>
-      <img src={VolumeIcon} alt="Volume" />
-      <Slider
-        railStyle={{ background: '#404040', borderRadius: '10' }}
-        trackStyle={{ background: '#FFF' }}
-        handleStyle={{ display: 'none' }}
-        value={100}
-      />
-    </Volume>
-  </Container>
+        <Time>
+          <span>1:39</span>
+          <ProgressSlider>
+            <Slider
+              railStyle={{ background: '#404040', borderRadius: '10' }}
+              trackStyle={{ background: '#1ED760' }}
+              handleStyle={{ border: 0 }}
+            />
+          </ProgressSlider>
+          <span>3:50</span>
+        </Time>
+      </MusicPlayer>
+
+      <Volume>
+        <img
+          src={VolumeIcon}
+          alt="Volume"
+        />
+        <Slider
+          railStyle={{ background: '#404040', borderRadius: '10' }}
+          trackStyle={{ background: '#FFF' }}
+          handleStyle={{ display: 'none' }}
+          value={100}
+        />
+      </Volume>
+    </Container>
 );
 
 Player.propTypes = {
@@ -105,6 +140,8 @@ Player.propTypes = {
   }).isRequired,
   play: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  prev: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
