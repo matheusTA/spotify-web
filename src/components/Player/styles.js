@@ -12,6 +12,7 @@ export const MusicCurrent = styled.div`
   display: flex;
   align-items: center;
   margin-left: 10px;
+  width: 220px;
 
   img {
     width: 48px;

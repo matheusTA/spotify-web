@@ -21,14 +21,18 @@ const Player = ({ player }) => (
     )}
 
     <MusicCurrent>
-      <img
-        src="https://i1.sndcdn.com/artworks-000143369540-dm6hgq-t500x500.jpg"
-        alt="Album"
-      />
-      <div>
-        <span>Party all the time</span>
-        <small>Vintage Culture</small>
-      </div>
+      {!!player.currentSong && (
+        <>
+          <img
+            src={player.currentSong.thumbnail}
+            alt={player.currentSong.title}
+          />
+          <div>
+            <span>{player.currentSong.title}</span>
+            <small>{player.currentSong.author}</small>
+          </div>
+        </>
+      )}
     </MusicCurrent>
 
     <MusicPlayer>
@@ -83,6 +87,9 @@ Player.propTypes = {
   player: PropTypes.shape({
     currentSong: PropTypes.shape({
       file: PropTypes.string,
+      thumbnail: PropTypes.string,
+      title: PropTypes.string,
+      author: PropTypes.string,
     }),
     status: PropTypes.string,
   }).isRequired,
