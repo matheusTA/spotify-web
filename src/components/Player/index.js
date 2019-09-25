@@ -24,6 +24,9 @@ const Player = ({
   pause,
   next,
   prev,
+  playing,
+  position,
+  duration,
 }) => (
 
     <Container>
@@ -33,6 +36,7 @@ const Player = ({
             url={player.currentSong.file}
             playStatus={player.status}
             onFinishedPlaying={next}
+            onPlaying={playing}
           />
         )}
 
@@ -101,7 +105,7 @@ const Player = ({
         </Controls>
 
         <Time>
-          <span>1:39</span>
+          <span>{position}</span>
           <ProgressSlider>
             <Slider
               railStyle={{ background: '#404040', borderRadius: '10' }}
@@ -109,7 +113,7 @@ const Player = ({
               handleStyle={{ border: 0 }}
             />
           </ProgressSlider>
-          <span>3:50</span>
+          <span>{duration}</span>
         </Time>
       </MusicPlayer>
 
@@ -142,10 +146,24 @@ Player.propTypes = {
   pause: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
+  playing: PropTypes.func.isRequired,
+  position: PropTypes.string.isRequired,
+  duration: PropTypes.string.isRequired,
 };
+
+function msToTime(duration) {
+  let seconds = parseInt((duration / 1000) % 60, 10);
+  const minutes = parseInt(((duration / (1000 * 60)) % 60), 10);
+
+  seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+  return `${minutes}:${seconds}`;
+}
 
 const mapStateToProps = (state) => ({
   player: state.player,
+  position: msToTime(state.player.position),
+  duration: msToTime(state.player.duration),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(PlayerActions, dispatch);
