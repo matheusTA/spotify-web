@@ -39,6 +39,7 @@ export const MusicCurrent = styled.div`
 
 export const MusicPlayer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
 `;
